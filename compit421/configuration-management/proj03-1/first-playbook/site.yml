@@ -1,0 +1,9 @@
+---
+# Main playbook for the entire "site"
+- name: Apply the example configuration to all nodes
+  hosts: all
+  remote_user: sypher
+  become: true
+
+  roles:
+    - motd
