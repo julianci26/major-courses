@@ -325,7 +325,7 @@ mode: '0640'
 
 ### **Example Project: Deploy a Basic Nginx Web Server**
 ---
-#### ** Project Structure**
+#### Project Structure
 ```
 webserver-ansible/
 ├── inventory.ini
@@ -343,7 +343,7 @@ webserver-ansible/
 │       ├── files/
 │       │   └── index.html
 │       └── vars/
-│           └── main.yml
+│        └── main.yml
 ```
 
 ####  **1. inventory.ini**
