@@ -14,6 +14,6 @@ Overall, my IT education has equipped me with the knowledge and hands-on experie
 
 ### Courses:
 - [COMP/IT 420: Database Theory and Design]
-- [COMP/IT 421: UNIX/Linux System Programming]
+- [COMP/IT 421: UNIX/Linux System Programming](major-courses/compit421)
 - [COMP/IT 424: Computer System Security]
 - [COMP/IT 430: Introduction to Computer Networks and Network Management]
