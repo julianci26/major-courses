@@ -1,6 +1,6 @@
 # Configuration Managment with Ansible
 ### Setup the Enrollment File
-Ansible needs to be created by having the user configured to the enrollment playbook for creating the role `enroll` to setup the ansible user. By using the `remote_user` for the ansible user to create the initial virtual machines for the automation as a specific YAML file.
+Ansible needs to be created by having the user configured to the enrollment playbook for creating the role `enroll` to setup the ansible user. By using the `remote_user` for the ansible user to create and enable the authorized initial virtual machines for the automation as a enrolled YAML file.
 ```
 ---
 # Enrollment Playbook
