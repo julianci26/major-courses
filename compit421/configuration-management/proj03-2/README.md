@@ -42,3 +42,16 @@ Enabling passwordless `sudo` command using `ansible.builtin.copy` to place a sud
     content: "ansible ALL=(ALL) NOPASSWD: ALL\n"
     mode: '0440'
 ```
+Once all the files have been created, the playbook should display the complete directory tree structure shown below, including the `enroll` role with its files and tasks.
+```
+$ tree -F second-playbook/
+second-playbook/
+├── enroll.yml
+├── hosts
+└── roles/
+    └── enroll/
+        ├── files/
+        │   └── ans
+        └── tasks/
+            └── main.yml
+```
