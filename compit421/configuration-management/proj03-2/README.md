@@ -1,5 +1,5 @@
 # Configuration Managment with Ansible
-**User Setup**
+### User Setup
 In Ansible, it's important to have a user with a name called `ansible` to run automation tasks and manage systems. This user is set up with the default shell `/bin/bash`, which allows it to run standard commands and scripts from the terminal. A home directory is also created, typically at `/home/ansible`, where Ansible keeps files like SSH keys and configuration settings. Setting up this user helps keep everything organized and makes sure tasks run smoothly and securely. To create a user for configuration management using Ansible, utilize the `ansible.builtin.user` module in the playbook. As shown in this script below:
 ```
 ---
