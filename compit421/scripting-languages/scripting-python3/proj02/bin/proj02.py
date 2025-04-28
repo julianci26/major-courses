@@ -4,9 +4,12 @@ import json
 import shutil
 from jinja2 import Environment, FileSystemLoader
 
-# Define the path for the API key
+# Define the path for the API key and read it
 API_FILE_PATH = "/home/jortiz/secret_key.txt"
-API_URL = "https://api.nasa.gov/planetary/apod"
+with open(API_FILE_PATH, "r") as file:
+    api_key = file.read().strip()
+
+API_URL = f"https://api.nasa.gov/planetary/apod?api_key={api_key}&count=3"
 
 # Folder paths
 DOWNLOAD_DIR = "downloads"
@@ -16,95 +19,53 @@ IMG_DIR = os.path.join(BUILD_DIR, "img")
 os.makedirs(DOWNLOAD_DIR, exist_ok=True)
 os.makedirs(IMG_DIR, exist_ok=True)
 
-# Function to extract three random APOD entries of the data
-def fetch_apod_data(api_key, count=3):
-    """Fetch random APOD entries from NASA API."""
-    apod_entries = []
-    index = 1
-    while len(apod_entries) < count:
-        random_date = get_random_apod_date()
-        params = {
-            "api_key": api_key,
-            "date": random_date
-        }
-        response = requests.get(NASA_APOD_URL, params=params)
-        if response.status_code == 200:
-            data = response.json()
-            # We only want entries with images, not videos
-            if data.get("media_type") == "image":
-                # Extract only the needed information
-                image_url = data.get("url", "")
-                date_str = data.get("date", "")
-                # Download with custom filename
-                image_name = download_image(image_url, index, date_str)
-                if image_name:
-                    apod_entry = {
-                        "copyright": data.get("copyright", "NASA"),
-                        "date": date_str,
-                        "image_name": image_name,
-                        "title": data.get("title", ""),
-                        "explanation": data.get("explanation", "")
-                    }
-                    apod_entries.append(apod_entry)
-                    index += 1
-    return apod_entries
-# Function to download images
-def download_image(url, index, entry_date):
-    """Download an image to the downloads directory with custom naming."""
-    if not os.path.exists(DOWNLOADS_DIR):
-        os.makedirs(DOWNLOADS_DIR)
-    # Create a filename based on date and index
-    filename = f"apod_{entry_date}_{index}.jpg"
-    file_path = os.path.join(DOWNLOADS_DIR, filename)
-    try:
-        response = requests.get(url, stream=True)
-        response.raise_for_status()
-        with open(file_path, 'wb') as file:
-            response.raw.decode_content = True
-            shutil.copyfileobj(response.raw, file)
-        print(f"Image saved to {file_path}")
-        return filename
-    except requests.RequestException as e:
-        print(f"Failed to download {url}: {e}")
-        return None
+# Step 1: Make the API request
+response = requests.get(API_URL)
 
-# Function to jinjafy the newsletter
-def generate_newsletter(apod_entries):
-    # Set up Jinja2 environment
-    env = Environment(loader=FileSystemLoader('templates'))
-    template = env.get_template("newsletter.html.j2")
-    # Render the newsletter
-    rendered_newsletter = template.render(entries=apod_entries)
-    # Save the newsletter HTML file
-    os.makedirs(BUILD_DIR, exist_ok=True)
-    newsletter_path = os.path.join(BUILD_DIR, "newsletter.html")
-    with open(newsletter_path, "w") as f:
-        f.write(rendered_newsletter)
-    print(f"Newsletter generated: {newsletter_path}")
+# Check if the request was successful
+if response.status_code == 200:
+    data = response.json()
 
-# Function to copy images to the build/img directory
-def move_images_to_build(apod_entries):
-    for entry in apod_entries:
-        image_filename = entry["image_filename"]
-        image_path = os.path.join(DOWNLOAD_DIR, image_filename)
-        destination = os.path.join(IMG_DIR, image_filename)
+    # Step 2: Download images
+    image_paths = []
+    for idx, item in enumerate(data):
+        img_url = item.get("url")
+        if img_url:
+            # Download the image
+            img_name = f"image_{idx + 1}.jpg"
+            img_path = os.path.join(DOWNLOAD_DIR, img_name)
+            img_data = requests.get(img_url).content
+            with open(img_path, 'wb') as img_file:
+                img_file.write(img_data)
 
-        if os.path.exists(image_path):
-            shutil.copy(image_path, destination)
-            print(f"Copied image {image_filename} to {IMG_DIR}")
-        else:
-            print(f"Image {image_filename} not found in {DOWNLOAD_DIR}")
+            image_paths.append(img_path)
+else:
+    print(f"Failed to fetch data. Status code: {response.status_code}")
 
-# Main workflow
-def main():
-    # Extract the APOD entries
-    apod_entries = extract_apod_data(num_entries=3)
-    # Download the images
-    download_images(apod_entries)
-    # Generate the newsletter using Jinja
-    generate_newsletter(apod_entries)
-    # Move the images to build/img
-    move_images_to_build(apod_entries)
+# Step 3: Prepare image data for template rendering
+images = [
+    {
+        'url': os.path.join('img', f"image_{idx + 1}.jpg"),  # Path to the image in the 'img' folder inside build
+        'title': item['title'],
+        'explanation': item['explanation']
+    }
+    for idx, item in enumerate(data)
+]
 
-if __name__ == "__main__":
-    main()
+# Step 4: Generate HTML with Jinja2
+env = Environment(loader=FileSystemLoader('/home/jortiz/proj02/templates'))
+template = env.get_template('newsletter-temp.html')
+
+# Rendering HTML with the image data
+context = {
+    'title': 'Astronomy Picture of the Day',
+    'images': images,  # Passing the image data to the template
+}
+html_content = template.render(context)
+
+# Save the HTML to the build directory
+html_output_path = os.path.join(BUILD_DIR, 'newsletter.html')
+with open(html_output_path, 'w') as html_file:
+    html_file.write(html_content)
+
+print("Images downloaded and HTML generated successfully.")
