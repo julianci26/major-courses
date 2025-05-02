@@ -1,0 +1,4 @@
+---
+# roles/activity/vars/main.yml
+name: "ava"
+ip: "192.168.56.100"

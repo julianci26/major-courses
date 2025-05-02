@@ -1,0 +1,9 @@
+---
+# Enrollment Playbook
+- name: Prepare a system to be managed by Ansible
+  hosts: fleet
+  remote_user: kscrivnor
+  become: true
+
+  roles:
+    - enroll
