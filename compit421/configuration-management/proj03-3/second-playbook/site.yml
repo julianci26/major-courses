@@ -1,0 +1,9 @@
+---
+# site.yml
+- name: Apply common configuration
+  hosts: fleet
+  remote_user: ava
+  become: true
+
+  roles:
+    - common

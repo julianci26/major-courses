@@ -1,0 +1,33 @@
+---
+# common/tasks/main.yml
+- name: Set timezone to America/Los_Angeles
+  timezone:
+    name: America/Los_Angeles
+
+- name: Manage the VMs
+  ansible.builtin.template:
+    src: hosts.j2
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+  tags:
+    - hosts
+    - configuration
+
+- name: Input the Message using /etc/motd
+  ansible.builtin.copy:
+    src: motd
+    dest: /etc/motd
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Install the latest packages
+  ansible.builtin.apt:
+    name:
+      - vim
+      - tar
+    state: latest
+    update_cache: yes
