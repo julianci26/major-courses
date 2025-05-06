@@ -1,7 +1,0 @@
-= Ansible User System Management Documentation
-
-== Project Overview
-This project the creation of an Ansible management user on target nodes, configures SSH key authentication, and enables passwordless sudo access. 
-Thus, understanding these interactions within the components from comprehending the virtual enviroments by how it works together. 
-These steps are essential for establishing a secure, automated management approach across multiple systems.
-

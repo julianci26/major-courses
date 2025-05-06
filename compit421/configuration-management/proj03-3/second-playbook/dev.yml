@@ -1,9 +1,0 @@
----
-# Verify that the playbook runs new users in the VMs
-- name: Making new users in the VMs
-  hosts: fleet
-  remote_user: ava
-  become: true
-
-  roles:
-    - devs

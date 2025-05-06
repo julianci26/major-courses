@@ -1,6 +1,0 @@
----
-# roles/activity/tasks/main.yml
-- name: Create a user info file
-  template:
-    src: users.j2
-    dest: /home/ava/users

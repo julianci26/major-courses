@@ -1,7 +1,0 @@
----
-# activity
-- name: Run activity role
-  hosts: 192.168.56.100
-  become: yes
-  roles:
-    - activity
