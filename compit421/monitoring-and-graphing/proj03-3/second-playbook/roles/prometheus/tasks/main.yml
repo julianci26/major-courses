@@ -1,0 +1,70 @@
+---
+# Configuration file for Prometheus
+- name: Add Prometheus User Agent
+  ansible.builtin.user:
+    name: prometheus
+    group: prometheus
+    shell: /usr/sbin/nologin
+    system: yes
+    create_home: no
+
+- name: Download the latest Prometheus release
+  ansible.builtin.get_url:
+    url: 'https://github.com/prometheus/prometheus/releases/download/v3.2.1/prometheus-3.2.1.linux-amd64.tar.gz'
+    dest: /tmp/prometheus-3.2.1.linux-amd64.tar.gz
+    mode: '0644'
+
+- name: Extract Prometheus
+  ansible.builtin.unarchive:
+    src: /tmp/prometheus-3.2.1.linux-amd64.tar.gz
+    dest: /opt/
+    remote_src: yes
+
+- name: Copy Prometheus systemd service file
+  ansible.builtin.copy:
+    src: /opt/prometheus.service
+    dest: /etc/systemd/system/prometheus.service
+    mode: '0644'
+    owner: root
+    group: root
+
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: Start Prometheus service
+  ansible.builtin.systemd:
+    name: prometheus
+    state: started
+    enabled: yes
+
+- name: Ensure Prometheus UFW is installed
+  ansible.builtin.apt:
+    name: ufw
+    state: present
+    update_cache: yes
+
+- name: Allow Prometheus port in UFW
+  ansible.builtin.ufw:
+    rule: allow
+    name: prometheus
+    port: 9090
+    proto: tcp
+
+- name: Open SSH port in UFW
+  ansible.builtin.ufw:
+    rule: allow
+    name: ssh
+    port: 22
+    proto: tcp
+
+- name: Enable UFW
+  ansible.builtin.ufw:
+    state: enabled
+    policy: allow
+    enabled: yes
+
+- name: Check UFW status
+  ansible.builtin.command: ufw status
+  register: ufw_status
+

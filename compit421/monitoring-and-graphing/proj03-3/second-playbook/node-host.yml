@@ -1,0 +1,7 @@
+---
+# This playbook installs and configures node_exporter on the control node.
+- name: Install and configure node_exporter on the control node
+  hosts: control
+  become: yes
+  roles:
+    - node_exporter

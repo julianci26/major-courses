@@ -1,0 +1,9 @@
+---
+# This playbook is used to update the hosts file on the control node
+- name: Update hosts file on control node
+  hosts: localhost
+  connection: local
+  become: yes
+
+  roles:
+    - common

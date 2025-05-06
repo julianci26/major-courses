@@ -1,0 +1,63 @@
+---
+# roles/node_exporter/tasks/main.yml
+- name: Ensure Node Exporter is installed
+  ansible.builtin.apt:
+    name: node-exporter
+    shell: /usr/sbin/nologin
+    state: present
+    update_cache: yes
+
+- name: Download the latest Node Exporter release
+  ansible.builtin.get_url:
+    url: 'https://github.com/prometheus/node_exporter/releases/tag/v1.9.1/node_exporter-1.9.1.linux-amd64.tar.gz'
+    dest: /tmp/node_exporter-1.9.1.linux-amd64.tar.gz
+    mode: '0644'
+
+- name: Extract Node Exporter
+  ansible.builtin.unarchive:
+    src: /tmp/node_exporter-1.9.1.linux-amd64.tar.gz
+    dest: /opt/
+    remote_src: yes
+
+- name: Copy Node Exporter systemd service file
+  ansible.builtin.copy:
+    src: /opt/node_exporter.service
+    dest: /etc/systemd/system/node_exporter.service
+    mode: '0644'
+    owner: root
+    group: root
+
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: Start Node Exporter service
+  ansible.builtin.systemd:
+    name: node_exporter
+    state: started
+    enabled: yes
+
+- name: Ensure Node Exporter UFW is installed
+  ansible.builtin.apt:
+    name: ufw
+    state: present
+    update_cache: yes
+
+- name: Allow Node Exporter port in UFW
+  ansible.builtin.ufw:
+    rule: allow
+    name: node_exporter
+    port: 9100
+    proto: tcp
+
+- name: Open SSH port in UFW
+  ansible.builtin.ufw:
+    rule: allow
+    name: ssh
+    port: 22
+    proto: tcp
+
+- name: Enable UFW
+  ansible.builtin.ufw:
+    state: enabled
+    enabled: yes
