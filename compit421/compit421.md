@@ -18,6 +18,11 @@
 ## Introduction to Automation and Configuration Management
 In the rapidly evolving landscape of modern IT infrastructure, the ability to automate, validate, and monitor systems at scale has become an essential competency for technology professionals. This documentation serves as a comprehensive introduction to three interconnected automation projects that form the foundation of efficient DevOps practices: Bash Scripting Automation, Configuration Management, and Python Automation.
 
+## Table of Content:
+- [Bash Scripting Automation](./bash-config/)
+- [Configuration Management](./config-manage/)
+- [Python Automation](./python-config/)
+
 ### Overview of Integrated DevOps Projects
 The automation framework presented here addresses the fundamental challenge faced by modern organizations: balancing the development team's need for rapid feature delivery with the operations team's focus on stability and reliability. This tension, once managed through traditional waterfall approaches, has evolved with the adoption of agile methodologies that demand faster development cycles and more responsive operations procedures. Our three-pronged approach provides a robust solution to this challenge.
 
