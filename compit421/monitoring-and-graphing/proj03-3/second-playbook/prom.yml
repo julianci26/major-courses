@@ -1,7 +1,0 @@
----
-# This playbook installs and configures Prometheus on the control node.
-- name: Install and configure Prometheus on the control node
-  hosts: control
-  become: yes
-  roles:
-    - prometheus

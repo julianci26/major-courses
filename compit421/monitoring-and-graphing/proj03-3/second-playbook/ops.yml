@@ -1,9 +1,0 @@
----
-# Creating a operating server playbook
-- name: Create ops server
-  hosts: fleet
-  remote_user: ava
-  become: true
-
-  roles:
-    - banana
