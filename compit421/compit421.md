@@ -1,4 +1,4 @@
-
+```
                        ,--.                                              
                      ,--.'|   ,---, ,--,     ,--,           ,---,   ,---,
          ,--,    ,--,:  : |,`--.' | |'. \   / .`|        ,`--.' |,`--.' |
@@ -13,6 +13,7 @@
 '  :  `--'   \'   : |      ;   |.' |   : / \  \  ;       ;   |.' ;   |.' 
 :  ,      .-./;   |.'      '---'   ;   |/   \  ' |       '---'   '---' 	
  `--`----'    '---'                `---'     `--`  			
+```
 # COMP/IT 421: Unix Programming II
 ## Introduction to Automation and Configuration Management
 In the rapidly evolving landscape of modern IT infrastructure, the ability to automate, validate, and monitor systems at scale has become an essential competency for technology professionals. This documentation serves as a comprehensive introduction to three interconnected automation projects that form the foundation of efficient DevOps practices: Bash Scripting Automation, Configuration Management, and Python Automation.
