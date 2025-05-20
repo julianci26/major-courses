@@ -3,7 +3,6 @@
 ## Part 1
 ---
 ### **DevOps Overview**
----
 - **Application Developers** aim to rapidly deliver new features and updates.
 - **Operations Teams** focus on stability and uptime, often resisting change to preserve reliability.
 - The shift from **Waterfall** to **Agile** methodologies led to faster development cycles.
@@ -20,7 +19,6 @@
 - **Measurement**: Constant monitoring of systems and services to gain actionable insights.
 - **Sharing**: Transparency and open communication of knowledge, tools, and processes.
 ### **Automation in DevOps**
----
 #### **Key Tools by Category**
 - **Systems Level Automation**:  
   - Tools: *Ansible*, *SaltStack*, *Puppet*, *Chef*  
@@ -34,7 +32,6 @@
   - Tools: *Terraform*, *Packer*  
   - Automate infrastructure provisioning and VM/container image creation.
 ### **What Should Be Automated First?**
----
 1. **Automated Setup of New Machines**
    - Tools/Methods: *Preseed* (for Debian/Ubuntu), *Kickstart* (for Red Hat/CentOS), *cloud-init*
    
@@ -49,7 +46,6 @@
    - Tools: *Ansible* with roles/playbooks for rolling updates, patch management
 
 ### **Measurement in DevOps**
----
 - **Legacy Monitoring Tools**:  
   - *Nagios*, *Cacti*: Basic alerting and system monitoring.
 
@@ -60,7 +56,6 @@
     - *Grafana*: Visualization and alerting on metrics from Prometheus and others
 
 ### **YAML Review**
----
 #### **What is YAML?**
 - YAML stands for “**YAML Ain’t Markup Language**.”
 - It’s a human-readable data serialization format, often used for configuration files and data exchange.
@@ -93,7 +88,7 @@
   - **True values**: `true`, `True`, `TRUE`, `yes`, `on`
   - **False values**: `false`, `False`, `FALSE`, `no`, `off`
 ### **Understanding the Ansible Playbook Structure**
----
+
 Ansible organizes automation into a structured, modular format to make it scalable, reusable, and easy to manage. Here's a breakdown of the key components involved:
 
 #### **1. Inventory Files (hosts)**
@@ -183,7 +178,7 @@ Ansible organizes automation into a structured, modular format to make it scalab
 ## Part 2
 ---
 ### Agent-Based vs. Agentless Configuration Management
----
+
 #### Agent-Based Platforms
 - An **agent** is extra software that needs to be installed on each managed system.
 - **Typical setup process:**
@@ -200,7 +195,7 @@ Ansible organizes automation into a structured, modular format to make it scalab
   - Python installed at `/usr/bin/python`
 
 ### Avoiding "Snowflake" Systems
----
+
 - A **snowflake system** is one that’s uniquely configured — like a snowflake, it's one of a kind.
 - **Why this is bad:**
   - Unique configurations lead to unique issues.
@@ -214,7 +209,7 @@ Ansible organizes automation into a structured, modular format to make it scalab
   - **AWX**
   - **Oracle Linux Automation Platform**
 ### A Structured Approach to Change
----
+
 #### For Major Changes:
 1. Create a **new branch**.
 2. Add or modify **Ansible playbook** code.
@@ -324,7 +319,7 @@ mode: '0640'
 - Variables
 
 ### **Example Project: Deploy a Basic Nginx Web Server**
----
+
 #### Project Structure
 ```
 webserver-ansible/
@@ -447,7 +442,6 @@ ansible-playbook -i inventory.ini site.yml
 ## Part 3
 ---
 ### System Monitoring Overview: Prometheus + Grafana
----
 #### Architecture Overview
 - Document the complete monitoring architecture
 - Explain that Prometheus runs on the main VM and pulls metrics from targets
