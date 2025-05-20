@@ -1,0 +1,8 @@
+---
+# This playbook installs and configures Prometheus on the control node.
+- name: Install and configure Prometheus on the control node
+  hosts: control
+  remote_user: ava
+  become: true
+  roles:
+    - prometheus

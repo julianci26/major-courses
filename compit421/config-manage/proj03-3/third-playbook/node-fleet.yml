@@ -1,0 +1,8 @@
+---
+# This playbook installs and configures node_exporter on a fleet of VMs.
+- name: Install and configure node_exporter on VM fleet
+  hosts: fleet
+  remote_user: ava
+  become: true
+  roles:
+    - node_exporter

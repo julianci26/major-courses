@@ -1,0 +1,20 @@
+---
+# roles/enroll/tasks/main.yml
+- name: Create a user 'vm1' with a home directory
+  ansible.builtin.user:
+    name: vm1 
+    create_home: yes
+
+- name: Set authorized key taken from file
+  ansible.posix.authorized_key:
+    user: vm1
+    state: present
+    key: "{{ lookup('file', 'home/vm1/.ssh/id_rsa.pub')}}"
+
+- name: Copy file with owner and permissions
+  ansible.builtin.copy:
+    src: ans
+    dest: /etc/sudoers.d/ans
+    owner: root
+    group: root
+    mode: '0644'

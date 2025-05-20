@@ -1,0 +1,9 @@
+---
+# This playbook is used to update the hosts file on the control node
+- name: Update hosts file on control node
+  hosts: control
+  remote_user: ava
+  become: true
+
+  roles:
+    - common

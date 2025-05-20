@@ -1,0 +1,35 @@
+---
+# Create new users and their SSH keys
+- name: Create new users
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    state: present
+    shell: /bin/bash
+  loop: "{{ lookup('vms', users) }}"
+
+- name: Create SSH keys
+  ansible.builtin.file:
+    path: "/home/{{ item.name }}/.ssh"
+    state: directory
+    mode: "0700"
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+  loop: "{{ lookup('vms', users) }}"
+  become: true
+
+- name: Add SSH keys
+  ansible.builtin.copy:
+    src: "{{ item.key }}"
+    dest: "/home/{{ item.name }}/.ssh/authorized_keys"
+    mode: "0600"
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+  loop: "{{ lookup('vms', users) }}"
+  become: true
+
+- name: Installing packages
+  ansible.builtin.package:
+    name: "{{ item.name }}"
+    state: present
+  become: true
+  loop: "{{ list_of_packages }}"

@@ -1,0 +1,13 @@
+Writing Queries for Prometheus
+------------------------------
+1. Filesystem Free % Space
+(1 - (node_filesystem_free_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"} )) * 100
+
+2. RAM Free % Space
+(node_memory_MemFree_bytes / node_memory_MemTotal_bytes) * 100
+
+3. System Uptime
+time() - node_boot_time_seconds
+
+To give uptime in seconds. To convert to hours:
+(time() - node_boot_time_seconds) / 3600

@@ -1,0 +1,69 @@
+---
+# This playbook installs a banana website on the server.
+- name: Install NGINX and UFW
+  ansible.builtin.apt:
+    name:
+      - nginx
+      - ufw
+    state: present
+    update_cache: true
+  tags:
+    - nginx
+    - banana
+    - firewall
+
+- name: Download banana
+  ansible.builtin.get_url:
+    url: "http://scrivnor.cikeys.com/files/website.tar.gz"
+    dest: /tmp/
+    mode: '0644'
+  tags:
+    - banana
+
+- name: Untar banana
+  ansible.builtin.unarchive:
+    src: /tmp/website.tar.gz
+    dest: /var/www/
+    remote_src: true
+  tags:
+    - banana
+
+- name: Set up the permissions for banana
+  ansible.builtin.file:
+    path: /var/www/website/html
+    owner: www-data
+    group: www-data
+    mode: '0644'
+    recurse: true
+  tags:
+    - banana
+    - permissions
+
+- name: Restart NGINX
+  ansible.builtin.systemd_service:
+    name: nginx
+    state: restarted
+    enabled: true
+  tags:
+    - nginx
+    - banana
+
+- name: Allow SSH connections (port 22)
+  community.general.ufw:
+    rule: allow
+    port: '22'
+    proto: tcp
+
+- name: Allow HTTP connections (port 80)
+  community.general.ufw:
+    rule: allow
+    port: '80'
+    proto: tcp
+
+- name: Enable UFW
+  community.general.ufw:
+    state: enabled
+    policy: allow
+  tags:
+    - firewall
+    - banana
