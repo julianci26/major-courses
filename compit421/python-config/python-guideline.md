@@ -1,5 +1,5 @@
-# Python Scripting for System Administrators: A Documentation Guideline
-
+# Documentation Guideline: Python Automation
+---
 ## Introduction to DevOps Python Automation
 This documentation provides a comprehensive guide to Python scripting automation for system administrators working in DevOps environments. Based on my learning in COMP 421 (Spring 2025), this guideline focuses on using Python to automate common system administration tasks.
 
@@ -278,5 +278,6 @@ logging.info("Newsletter generation complete")
 ```
 
 ## Conclusion
+---
 Python scripting provides system administrators with powerful tools to automate routine tasks. By combining libraries like Jinja2, Requests, and Fabric, administrators can create sophisticated automation workflows that enhance productivity and ensure consistency across systems.
 This documentation guideline serves as a reference for implementing Python automation in systems administration, with the Astronomy Newsletter project demonstrating practical application of these concepts.
