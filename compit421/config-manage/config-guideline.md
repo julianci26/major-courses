@@ -1,7 +1,6 @@
-# Configuration Management
+# Documentation Guideline: Configuration Management
 ---
 ## Part 1
----
 ### **DevOps Overview**
 - **Application Developers** aim to rapidly deliver new features and updates.
 - **Operations Teams** focus on stability and uptime, often resisting change to preserve reliability.
